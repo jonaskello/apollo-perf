@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {
-    "start": "run-p start-client start-server",
+    "start": "run-p -l start-client start-server",
     "start-client": "cd packages/apollo-perf-client && yarn start",
     "start-server": "cd packages/apollo-perf-server && yarn start"
   },
