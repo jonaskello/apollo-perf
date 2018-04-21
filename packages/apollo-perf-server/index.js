@@ -3,17 +3,14 @@ const bodyParser = require("body-parser");
 const { graphqlExpress, graphiqlExpress } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 
+let books = [];
 // Some fake data
-const books = [
-  {
+for (let i = 0; i < 1000; i++) {
+  books.push({
     title: "Harry Potter and the Sorcerer's stone",
     author: "J.K. Rowling"
-  },
-  {
-    title: "Jurassic Park",
-    author: "Michael Crichton"
-  }
-];
+  });
+}
 
 // The GraphQL schema in string form
 const typeDefs = `

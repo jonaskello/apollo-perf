@@ -11,12 +11,25 @@ const client = new ApolloClient({
 });
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      olle: 0
+    };
+  }
   render() {
     return (
       <ApolloProvider client={client}>
         <div>
           <h2>My first Apollo app</h2>
-          <Books />
+          <Books
+            olle={this.state.olle}
+            updateOlle={() => {
+              this.setState(prevState => ({
+                olle: prevState.olle + 1
+              }));
+            }}
+          />
         </div>
       </ApolloProvider>
     );
