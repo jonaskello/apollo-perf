@@ -2,6 +2,11 @@
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {
-    "start": "cd packages/apollo-perf-client && yarn start"
+    "start": "run-p start-client start-server",
+    "start-client": "cd packages/apollo-perf-client && yarn start",
+    "start-server": "cd packages/apollo-perf-server && yarn start"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
   }
 }
