@@ -9,17 +9,38 @@ export const Books = ({ olle, updateOlle }) => (
       {
         books {
           title
-          author
+          authors {
+            name
+            age
+            prices {
+              name
+              year
+            }
+          }
         }
 
         books2: books {
           title
-          author
+          authors {
+            name
+            age
+            prices {
+              name
+              year
+            }
+          }
         }
 
         books3: books {
           title
-          author
+          authors {
+            name
+            age
+            prices {
+              name
+              year
+            }
+          }
         }
       }
     `}

@@ -4,18 +4,29 @@ const { graphqlExpress, graphiqlExpress } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 
 let books = [];
+const authors = [
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+];
 // Some fake data
 for (let i = 0; i < 1000; i++) {
   books.push({
     title: "Harry Potter and the Sorcerer's stone",
-    author: "J.K. Rowling"
+    authors: authors
   });
 }
 
 // The GraphQL schema in string form
 const typeDefs = `
   type Query { books: [Book] }
-  type Book { title: String, author: String }
+  type Book { title: String, authors: [Author] }
+  type Author { name: String, age: Int, prices: [Price]}
+  type Price { name: String, year: Int}
 `;
 
 // The resolvers
