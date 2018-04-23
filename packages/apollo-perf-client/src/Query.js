@@ -53,12 +53,7 @@ export class Query extends React.Component {
     const response = {};
     if (this.state.result) {
       for (const [key, value] of Object.entries(this.state.result)) {
-        const denormalized = denormalize(
-          value,
-          this.state.entities,
-          undefined,
-          isId
-        );
+        const denormalized = denormalize(value, this.state.entities);
         response[key] = denormalized;
         // console.log("denormalized", denormalized);
       }
@@ -72,16 +67,4 @@ export class Query extends React.Component {
       error: this.state.error
     });
   }
-}
-
-function isId(value, entities) {
-  // console.log("isId value", value);
-  // console.log("isId entities", entities);
-  if (typeof value === "string") {
-    // If we find a object in the cache let's assume it is an ID
-    if (entities[value]) {
-      return true;
-    }
-  }
-  return false;
 }
