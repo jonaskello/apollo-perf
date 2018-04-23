@@ -1,6 +1,7 @@
 import React from "react";
 import { request } from "graphql-request";
 import { GraphQLNormalizr } from "./graphql-normalizr";
+import { normalize } from "./my-normalizer";
 
 export class Query extends React.Component {
   constructor(props) {
@@ -16,9 +17,30 @@ export class Query extends React.Component {
 
     request("/graphql", queryWithRequiredFields, variables)
       .then(data => {
-        console.log("data", data);
-        const normalized = normalizer.normalize({ data });
-        console.log("normalized", normalized);
+        // Normalize each root field
+        const normalizedQuery = {};
+        let normalizedResponse = {};
+        for (const [key, value] of Object.entries(data)) {
+          const normalized = normalize(
+            { id: key, __typename: "RootField", result: value },
+            obj => obj.id + ";" + obj.__typename
+          );
+          normalizedQuery[key] = normalized.result;
+          normalizedResponse = Object.assign(
+            normalizedResponse,
+            normalized.entities
+          );
+        }
+        console.log("normalizedResponse", normalizedResponse);
+        console.log("normalizedQuery", normalizedQuery);
+
+        // data.id = "FAKEID";
+        // data.__typename = "Query";
+        // const normalized = normalize(
+        //   data,
+        //   obj => obj.id + ";" + obj.__typename
+        // );
+        // console.log("normalized", normalized);
         this.setState({ data, loading: false });
       })
       .catch(e => {
