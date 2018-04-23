@@ -50,7 +50,7 @@ const authors = [
 ];
 
 // Some fake data
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 1000; i++) {
   books.push({
     id: i,
     title: "Harry Potter and the Sorcerer's stone",
