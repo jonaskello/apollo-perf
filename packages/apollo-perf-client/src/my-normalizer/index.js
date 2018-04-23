@@ -38,22 +38,28 @@ function denormalizeValue(value, entities, callbacks) {
   }
   const normalizedObj = entities[idToCacheKey(value)];
   if (normalizedObj) {
-    const denormalizedObj = {};
-    for (const key of Object.keys(normalizedObj)) {
-      const keyObj = normalizedObj[key];
-      if (!shouldDenormalize(keyObj, key)) {
-        // Skip this!
-        denormalizedObj[key] = keyObj;
-      } else if (Array.isArray(keyObj)) {
-        // This could either be an array of values, or an array of IDs
-        denormalizedObj[key] = keyObj.map(item =>
-          denormalizeValue(item, entities, callbacks)
-        );
-      } else {
-        denormalizedObj[key] = denormalizeValue(keyObj, entities, callbacks);
+    if (Array.isArray(normalizedObj)) {
+      return normalizedObj.map(item =>
+        denormalizeValue(item, entities, callbacks)
+      );
+    } else {
+      const denormalizedObj = {};
+      for (const key of Object.keys(normalizedObj)) {
+        const keyObj = normalizedObj[key];
+        if (!shouldDenormalize(keyObj, key)) {
+          // Skip this!
+          denormalizedObj[key] = keyObj;
+        } else if (Array.isArray(keyObj)) {
+          // This could either be an array of values, or an array of IDs
+          denormalizedObj[key] = keyObj.map(item =>
+            denormalizeValue(item, entities, callbacks)
+          );
+        } else {
+          denormalizedObj[key] = denormalizeValue(keyObj, entities, callbacks);
+        }
       }
+      return denormalizedObj;
     }
-    return denormalizedObj;
   } else {
     return value;
   }
