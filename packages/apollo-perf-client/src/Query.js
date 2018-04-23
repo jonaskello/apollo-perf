@@ -1,6 +1,6 @@
 import React from "react";
 import { request } from "graphql-request";
-import { GraphQLNormalizr } from "graphql-normalizr";
+import { GraphQLNormalizr } from "./graphql-normalizr";
 
 export class Query extends React.Component {
   constructor(props) {
@@ -15,7 +15,12 @@ export class Query extends React.Component {
     const queryWithRequiredFields = normalizer.addRequiredFields(query);
 
     request("/graphql", queryWithRequiredFields, variables)
-      .then(data => this.setState({ data, loading: false }))
+      .then(data => {
+        console.log("data", data);
+        const normalized = normalizer.normalize({ data });
+        console.log("normalized", normalized);
+        this.setState({ data, loading: false });
+      })
       .catch(e => {
         console.error("GRAPHQL ERROR: ", e);
         this.setState({ error: e, loading: false });

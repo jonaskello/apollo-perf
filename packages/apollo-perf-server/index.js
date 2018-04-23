@@ -9,47 +9,48 @@ const authors = [
     id: 1,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 1, name: "asdf", year: 2017 }]
   },
   {
     id: 2,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 2, name: "asdf", year: 2017 }]
   },
   {
     id: 3,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 3, name: "asdf", year: 2017 }]
   },
   {
     id: 4,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 4, name: "asdf", year: 2017 }]
   },
   {
     id: 5,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 5, name: "asdf", year: 2017 }]
   },
   {
     id: 6,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 6, name: "asdf", year: 2017 }]
   },
   {
     id: 7,
     name: "J.K. Rowling",
     age: 100,
-    prices: [{ name: "asdf", year: 2017 }]
+    prices: [{ id: 7, name: "asdf", year: 2017 }]
   }
 ];
+
 // Some fake data
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 10; i++) {
   books.push({
     id: i,
     title: "Harry Potter and the Sorcerer's stone",
