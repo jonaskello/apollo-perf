@@ -11,7 +11,7 @@ export class QueryInternal extends React.Component {
     this.state = {
       data: undefined,
       loading: true,
-      entities: undefined,
+      // entities: undefined,
       result: undefined
     };
   }
@@ -38,13 +38,13 @@ export class QueryInternal extends React.Component {
         }
         // console.log("entities", entities);
         // console.log("result", result);
+        dispatch(Actions.mergeEntities(entities));
         this.setState({
           data,
           loading: false,
-          entities,
+          // entities,
           result
         });
-        dispatch(Actions.mergeEntities(entities));
       })
       .catch(e => {
         console.error("GRAPHQL ERROR: ", e);
@@ -53,7 +53,9 @@ export class QueryInternal extends React.Component {
   }
 
   render() {
-    const { entities, result, loading, error } = this.state;
+    const { result, loading, error } = this.state;
+    const { entities } = this.props;
+    console.log("entities", entities);
     const response = {};
     if (result) {
       for (const [key, value] of Object.entries(result)) {
