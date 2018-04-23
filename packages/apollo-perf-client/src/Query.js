@@ -2,8 +2,10 @@ import React from "react";
 import { request } from "graphql-request";
 import { GraphQLNormalizr } from "./graphql-normalizr";
 import { normalize, denormalize } from "./my-normalizer";
+import { connect } from "react-redux";
+import * as Actions from "./Actions";
 
-export class Query extends React.Component {
+export class QueryInternal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +17,7 @@ export class Query extends React.Component {
   }
 
   componentDidMount() {
-    const { query, variables } = this.props;
+    const { query, variables, dispatch } = this.props;
 
     const normalizer = new GraphQLNormalizr({});
     const queryWithRequiredFields = normalizer.addRequiredFields(query);
@@ -42,6 +44,7 @@ export class Query extends React.Component {
           entities,
           result
         });
+        dispatch(Actions.mergeEntities(entities));
       })
       .catch(e => {
         console.error("GRAPHQL ERROR: ", e);
@@ -50,10 +53,11 @@ export class Query extends React.Component {
   }
 
   render() {
+    const { entities, result, loading, error } = this.state;
     const response = {};
-    if (this.state.result) {
-      for (const [key, value] of Object.entries(this.state.result)) {
-        const denormalized = denormalize(value, this.state.entities);
+    if (result) {
+      for (const [key, value] of Object.entries(result)) {
+        const denormalized = denormalize(value, entities);
         response[key] = denormalized;
         // console.log("denormalized", denormalized);
       }
@@ -61,10 +65,18 @@ export class Query extends React.Component {
     }
 
     return this.props.children({
-      loading: this.state.loading,
+      loading: loading,
       // data: this.state.data,
       data: response,
-      error: this.state.error
+      error: error
     });
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    entities: state.entities
+  };
+};
+
+export const Query = connect(mapStateToProps)(QueryInternal);

@@ -5,3 +5,7 @@ export function inc() {
 export function dec() {
   return { type: "dec" };
 }
+
+export function mergeEntities(entities) {
+  return { type: "merge-entities", payload: { entities } };
+}
