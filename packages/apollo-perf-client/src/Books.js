@@ -1,7 +1,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import * as R from "ramda";
+import { BookList } from "./BookList";
 
 export const Books = ({ olle, updateOlle }) => (
   <Query
@@ -52,14 +52,7 @@ export const Books = ({ olle, updateOlle }) => (
       return (
         <div>
           <h2 onClick={updateOlle}>olle: {olle}</h2>
-          {R.take(
-            10,
-            data.books.map(({ title, author }) => (
-              <div key={title}>
-                <p>{`${title}: ${author}`}</p>
-              </div>
-            ))
-          )}
+          <BookList data={data} />
         </div>
       );
     }}
