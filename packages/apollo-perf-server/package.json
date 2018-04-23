@@ -11,6 +11,6 @@
     "graphql-tools": "^2.24.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   }
 }

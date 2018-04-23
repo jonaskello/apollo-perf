@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "graphql": "^0.13.2",
+    "graphql-normalizr": "^1.0.1",
     "graphql-request": "^1.5.1",
     "graphql-tag": "^2.9.1",
     "react": "^16.3.2",
@@ -11,7 +12,7 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

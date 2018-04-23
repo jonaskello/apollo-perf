@@ -5,17 +5,53 @@ const { makeExecutableSchema } = require("graphql-tools");
 
 let books = [];
 const authors = [
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
-  { name: "J.K. Rowling", age: 100, prices: [{ name: "asdf", year: 2017 }] },
+  {
+    id: 1,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  },
+  {
+    id: 2,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  },
+  {
+    id: 3,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  },
+  {
+    id: 4,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  },
+  {
+    id: 5,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  },
+  {
+    id: 6,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  },
+  {
+    id: 7,
+    name: "J.K. Rowling",
+    age: 100,
+    prices: [{ name: "asdf", year: 2017 }]
+  }
 ];
 // Some fake data
 for (let i = 0; i < 1000; i++) {
   books.push({
+    id: i,
     title: "Harry Potter and the Sorcerer's stone",
     authors: authors
   });
@@ -24,9 +60,9 @@ for (let i = 0; i < 1000; i++) {
 // The GraphQL schema in string form
 const typeDefs = `
   type Query { books: [Book] }
-  type Book { title: String, authors: [Author] }
-  type Author { name: String, age: Int, prices: [Price]}
-  type Price { name: String, year: Int}
+  type Book { id: Int, title: String, authors: [Author] }
+  type Author { id: Int, name: String, age: Int, prices: [Price]}
+  type Price { id: Int, name: String, year: Int}
 `;
 
 // The resolvers
