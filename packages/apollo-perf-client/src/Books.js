@@ -49,12 +49,7 @@ export const Books = ({ olle, updateOlle }) => (
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error :(</p>;
 
-      return (
-        <div>
-          <h2 onClick={updateOlle}>olle: {olle}</h2>
-          <BookList data={data} />
-        </div>
-      );
+      return <BookList data={data} olle={olle} updateOlle={updateOlle} />;
     }}
   </Query>
 );
