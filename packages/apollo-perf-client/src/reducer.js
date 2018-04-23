@@ -18,6 +18,18 @@ export function reducer(state = { olle: 0, entities: {} }, action) {
         entities: { ...state.entities, ...action.payload.entities }
       };
     }
+    case "mutate": {
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          "Author;1": {
+            ...state.entities["Author;1"],
+            name: "J.Kello"
+          }
+        }
+      };
+    }
     default: {
       return state;
     }

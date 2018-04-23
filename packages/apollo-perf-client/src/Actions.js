@@ -9,3 +9,7 @@ export function dec() {
 export function mergeEntities(entities) {
   return { type: "merge-entities", payload: { entities } };
 }
+
+export function mutate() {
+  return { type: "mutate" };
+}
