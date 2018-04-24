@@ -1,11 +1,11 @@
 import React from "react";
 import { request } from "graphql-request";
-import { GraphQLNormalizr } from "./graphql-normalizr";
-import { normalize, denormalize } from "./my-normalizer";
+import * as Reselect from "reselect";
 import { connect } from "react-redux";
+import { normalize, denormalize, addRequiredFields } from "./my-normalizer";
 import * as Actions from "./Actions";
 
-export class QueryInternal extends React.Component {
+class QueryInternal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,10 +17,10 @@ export class QueryInternal extends React.Component {
   }
 
   componentDidMount() {
+    console.log("123123123");
     const { query, variables, dispatch } = this.props;
 
-    const normalizer = new GraphQLNormalizr({});
-    const queryWithRequiredFields = normalizer.addRequiredFields(query);
+    const queryWithRequiredFields = addRequiredFields(query);
 
     request("/graphql", queryWithRequiredFields, variables)
       .then(data => {
@@ -54,31 +54,47 @@ export class QueryInternal extends React.Component {
 
   render() {
     const { result, loading, error } = this.state;
-    const { entities } = this.props;
-    console.log("entities", entities);
-    const response = {};
-    if (result) {
-      for (const [key, value] of Object.entries(result)) {
-        const denormalized = denormalize(value, entities);
-        response[key] = denormalized;
-        // console.log("denormalized", denormalized);
-      }
-      // console.log("response", response);
-    }
-
-    return this.props.children({
-      loading: loading,
-      // data: this.state.data,
-      data: response,
-      error: error
-    });
+    return (
+      <InnerComponentConnected result={result} loading={loading} error={error}>
+        {this.props.children}
+      </InnerComponentConnected>
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    entities: state.entities
-  };
-};
+export const Query = connect()(QueryInternal);
 
-export const Query = connect(mapStateToProps)(QueryInternal);
+function InnerComponent({ children, error, loading, response }) {
+  return children({
+    loading: loading,
+    // data: this.state.data,
+    data: response,
+    error: error
+  });
+}
+
+function buildResponse(result, entities) {
+  const response = {};
+  if (result) {
+    for (const [key, value] of Object.entries(result)) {
+      const denormalized = denormalize(value, entities);
+      response[key] = denormalized;
+    }
+  }
+
+  return response;
+}
+
+const mapStateToProps = Reselect.createSelector(
+  state => {
+    return state.entities;
+  },
+  (_, props) => props.result,
+  (entities, result) => {
+    return {
+      response: buildResponse(result, entities)
+    };
+  }
+);
+
+const InnerComponentConnected = connect(mapStateToProps)(InnerComponent);

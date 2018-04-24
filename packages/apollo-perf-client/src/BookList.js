@@ -1,8 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
 import * as Actions from "./Actions";
 
-export function BookListInternal({ data, olle, dispatch }) {
+export function BookList({ data, olle, dispatch }) {
   return (
     <div>
       <h2>olle: {olle}</h2>
@@ -17,11 +16,3 @@ export function BookListInternal({ data, olle, dispatch }) {
     </div>
   );
 }
-
-const mapStateToProps = state => {
-  return {
-    olle: state.olle
-  };
-};
-
-export const BookList = connect(mapStateToProps)(BookListInternal);

@@ -2,8 +2,9 @@ import React from "react";
 import { Query } from "./Query";
 import gql from "graphql-tag";
 import { BookList } from "./BookList";
+import { connect } from "react-redux";
 
-export const Books = ({ olle, updateOlle }) => (
+export const BooksInternal = ({ olle, dispatch }) => (
   <Query
     query={gql`
       {
@@ -49,7 +50,15 @@ export const Books = ({ olle, updateOlle }) => (
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error :(</p>;
 
-      return <BookList data={data} olle={olle} updateOlle={updateOlle} />;
+      return <BookList data={data} olle={olle} dispatch={dispatch} />;
     }}
   </Query>
 );
+
+const mapStateToProps = state => {
+  return {
+    olle: state.olle
+  };
+};
+
+export const Books = connect(mapStateToProps)(BooksInternal);
